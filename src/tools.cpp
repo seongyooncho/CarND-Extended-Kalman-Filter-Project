@@ -48,14 +48,14 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
   float c2 = sqrt(c1);
   float c3 = vx * py - vy * px / (c1 * c2);
 
-  if (fabs(c1) < 0.0001) {
+  if (fabs(c1) < 0.001) {
     std::cout << "CalculateJacobian: Division by zero" << std::endl;
     return Hj;
   }
 
   Hj <<  px / c2, py /  c2,       0, 0,
         -py / c1, px /  c1,       0, 0,
-         py * c3, px / -c3, px / c2, py / c2;
+         py * c3, px * (-c3), px / c2, py / c2;
 
   return Hj;
 }
