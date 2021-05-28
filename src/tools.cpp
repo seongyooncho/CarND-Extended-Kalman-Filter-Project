@@ -46,7 +46,8 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
 
   float c1 = px*px+py*py;
   float c2 = sqrt(c1);
-  float c3 = vx * py - vy * px / (c1 * c2);
+  float c3 = c1 * c2;
+  float c4 = (vx * py - vy * px) / c3;
 
   if (fabs(c1) < 0.001) {
     std::cout << "CalculateJacobian: Division by zero" << std::endl;
@@ -55,7 +56,7 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
 
   Hj <<  px / c2, py /  c2,       0, 0,
         -py / c1, px /  c1,       0, 0,
-         py * c3, px * (-c3), px / c2, py / c2;
+         py * c4, px * (-c4), px / c2, py / c2;
 
   return Hj;
 }
